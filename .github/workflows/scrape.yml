@@ -39,6 +39,10 @@ jobs:
         if: always()   # 동아대가 실패해도 따로 돈다 (실패하면 둘 다 메일로 알려줌)
         run: python -m scraper.scrape --school cup
 
+      - name: 고려대 수집
+        if: always()
+        run: python -m scraper.scrape --school ku
+
       - name: 변경 사항 커밋
         if: always()   # 실패해도 status.json(실패 기록)은 남긴다
         run: |

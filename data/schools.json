@@ -20,6 +20,16 @@
    "color": "#103F74",
    "colorName": "CUP 블루",
    "dataPath": "cup/latest.json"
+  },
+  {
+   "id": "ku",
+   "name": "고려대학교",
+   "shortName": "고려대",
+   "region": "서울",
+   "campusSummary": "안암캠퍼스",
+   "color": "#7C0019",
+   "colorName": "크림슨",
+   "dataPath": "ku/latest.json"
   }
  ]
 }

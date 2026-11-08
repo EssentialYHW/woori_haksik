@@ -5,6 +5,7 @@
     python -m scraper.scrape --cells cells.json --out app/src/main/assets/sample   # 앱 샘플 데이터 만들기
     python -m scraper.scrape --school cup                                          # 부산가톨릭대
     python -m scraper.scrape --school cup --fixture scraper/tests/fixtures/cup_2026-11-02_13.json
+    python -m scraper.scrape --school ku                                           # 고려대(안암)
 
 실패하면 종료 코드 1 → GitHub Actions 가 실패 알림 메일을 보낸다.
 """
@@ -18,10 +19,10 @@ from datetime import datetime
 from pathlib import Path
 
 from scraper.core import KST, ScrapeError, build_result, save, save_status
-from scraper.schools import cup, donga
+from scraper.schools import cup, donga, ku
 
 ROOT = Path(__file__).resolve().parent.parent
-SCHOOLS = {"donga": donga, "cup": cup}
+SCHOOLS = {"donga": donga, "cup": cup, "ku": ku}
 
 
 def run(school_id: str, out_dir: Path, html_file: Path | None, cells_file: Path | None, fixture: Path | None = None) -> dict:
