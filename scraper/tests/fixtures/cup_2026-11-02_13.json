@@ -1,0 +1,16 @@
+{
+ "_comment": "부산가톨릭대 changeAjax.do 실제 응답(f_memo4~12만 남김). null = 빈 응답([])",
+ "2026-11-02": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "쇠고기야채볶음밥\r\n순두부찌개\r\n핫도그\r\n그린샐러드/흑임자D\r\n단호박범벅\r\n마시는요플레\r\n석류주스\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-03": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "백미밥/혼합잡곡밥\r\n조랭이떡국\r\n오삼불고기\r\n교자만두튀김\r\n양배추쌈\r\n검은콩조림\r\n매실주스\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-04": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "백미밥\r\n꽃게탕\r\n메란돈장조림\r\n야채튀김\r\n미니새송이버섯볶음\r\n간장깻잎지\r\n복숭아홍차\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-05": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "백미밥\r\n나가사키짬뽕국물\r\n해물볶음우동\r\n멘치까스\r\n만다린치커리샐러드\r\n간장마늘쫑지\r\n오미자주스\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-06": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "김치볶음밥\r\n콩나물국\r\n계란후라이\r\n미니돈까스\r\n그린샐러드/요거트D\r\n수제밤티라미수\r\n유자민트티\r\n깍두기", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-07": null,
+ "2026-11-08": null,
+ "2026-11-09": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "백미밥/혼합잡곡밥\r\n시락국\r\n제육볶음\r\n상추쌈\r\n미역줄기맛살볶음\r\n요플레\r\n매실차\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-10": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "백미밥/혼합잡곡밥\r\n새알미역국\r\n시래기찜닭\r\n감자채전\r\n도토리묵무침\r\n흑임자실곤약무침\r\n꿀차\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-11": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "쇠고기콩나물밥\r\n닭개장\r\n너비아니구이\r\n그린샐러드/키위D\r\n무말랭이무침\r\n츄러스빼빼로\r\n유자차\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-12": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "백미밥/혼합잡곡밥\r\n물만둣국\r\n순대야채볶음\r\n새우감자고로케\r\n사각어묵볶음\r\n갈릭브로콜리볶음\r\n율무차\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-13": {"f_memo4": null, "f_memo5": null, "f_memo6": null, "f_memo7": "백미밥\r\n미소장국\r\n카레돈까스\r\n양배추샐러드\r\n무생채\r\n고추잎지\r\n오미자차\r\n배추김치", "f_memo8": null, "f_memo9": null, "f_memo10": null, "f_memo11": null, "f_memo12": null},
+ "2026-11-16": null
+}

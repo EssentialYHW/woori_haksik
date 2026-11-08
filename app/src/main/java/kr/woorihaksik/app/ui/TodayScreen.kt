@@ -60,7 +60,7 @@ import kr.woorihaksik.app.util.weekStart
 fun TodayScreen(s: UiState, vm: AppViewModel) {
     val school = s.school ?: return
     var picker by remember { mutableStateOf(false) }
-    val title = listOfNotNull(school.shortName, s.campus?.name).joinToString(" ")
+    val title = listOfNotNull(school.shortName, s.campusLabel).joinToString(" ")
 
     Column(Modifier.fillMaxSize().background(W.Bg).statusBarsPadding()) {
         ScreenHeader(
@@ -239,7 +239,8 @@ private fun Footer(s: UiState, vm: AppViewModel) {
 @Composable
 private fun CampusPicker(s: UiState, vm: AppViewModel, onClose: () -> Unit) {
     val accent = LocalSchoolColor.current
-    val campuses = s.data?.campuses.orEmpty()
+    // 캠퍼스가 하나뿐이면 고를 게 없으니 '학교 바꾸기'만 보여준다.
+    val campuses = s.data?.campuses.orEmpty().takeIf { it.size > 1 }.orEmpty()
     AlertDialog(
         onDismissRequest = onClose,
         containerColor = W.Card,

@@ -73,7 +73,7 @@ fun MyScreen(s: UiState, vm: AppViewModel) {
                     Column(Modifier.weight(1f), verticalArrangement = Arrangement.spacedBy(2.dp)) {
                         Text(school.name, style = T.Title, color = W.Ink)
                         Text(
-                            listOfNotNull(campus?.name?.let { it + "캠퍼스" }, school.colorName.ifEmpty { null }).joinToString(" · "),
+                            listOfNotNull(s.campusLabel?.let { it + "캠퍼스" }, school.colorName.ifEmpty { null }).joinToString(" · "),
                             style = T.Caption,
                             color = W.Muted2,
                         )

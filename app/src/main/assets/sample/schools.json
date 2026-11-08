@@ -10,6 +10,16 @@
    "color": "#041E42",
    "colorName": "동아진청색",
    "dataPath": "donga/latest.json"
+  },
+  {
+   "id": "cup",
+   "name": "부산가톨릭대학교",
+   "shortName": "부산가톨릭대",
+   "region": "부산",
+   "campusSummary": "금정구 부곡동",
+   "color": "#103F74",
+   "colorName": "CUP 블루",
+   "dataPath": "cup/latest.json"
   }
  ]
 }

@@ -38,6 +38,10 @@ data class UiState(
 ) {
     val campus: Campus?
         get() = data?.campuses?.firstOrNull { it.id == campusId } ?: data?.campuses?.firstOrNull()
+
+    /** 화면에 쓸 캠퍼스 이름. 캠퍼스가 하나뿐인 학교(예: 부산가톨릭대)는 굳이 표시하지 않는다. */
+    val campusLabel: String?
+        get() = if ((data?.campuses?.size ?: 0) > 1) campus?.name else null
 }
 
 fun favKey(campusId: String, restaurantId: String) = "$campusId/$restaurantId"

@@ -3,6 +3,8 @@
     python -m scraper.scrape                       # 동아대 사이트에서 받아 data/ 에 저장
     python -m scraper.scrape --html page.html      # 저장해 둔 페이지로 테스트
     python -m scraper.scrape --cells cells.json --out app/src/main/assets/sample   # 앱 샘플 데이터 만들기
+    python -m scraper.scrape --school cup                                          # 부산가톨릭대
+    python -m scraper.scrape --school cup --fixture scraper/tests/fixtures/cup_2026-11-02_13.json
 
 실패하면 종료 코드 1 → GitHub Actions 가 실패 알림 메일을 보낸다.
 """
@@ -16,17 +18,20 @@ from datetime import datetime
 from pathlib import Path
 
 from scraper.core import KST, ScrapeError, build_result, save, save_status
-from scraper.schools import donga
+from scraper.schools import cup, donga
 
 ROOT = Path(__file__).resolve().parent.parent
-SCHOOLS = {"donga": donga}
+SCHOOLS = {"donga": donga, "cup": cup}
 
 
-def run(school_id: str, out_dir: Path, html_file: Path | None, cells_file: Path | None) -> dict:
+def run(school_id: str, out_dir: Path, html_file: Path | None, cells_file: Path | None, fixture: Path | None = None) -> dict:
     mod = SCHOOLS[school_id]
     now = datetime.now(KST)
     try:
-        if cells_file:
+        if hasattr(mod, "collect"):
+            # API로 받는 학교: 어댑터가 패널과 운영시간을 바로 돌려준다.
+            panels, hours = mod.collect(fixture)
+        elif cells_file:
             panels, hours = json.loads(cells_file.read_text(encoding="utf-8")), {}
             # 샘플용: 운영시간은 테스트 HTML에서 가져온다.
             fixture = ROOT / "scraper" / "tests" / "fixtures" / "donga_menu.html"
@@ -60,9 +65,10 @@ def main(argv: list[str] | None = None) -> int:
     ap.add_argument("--out", type=Path, default=ROOT / "data")
     ap.add_argument("--html", type=Path, help="저장해 둔 페이지 HTML로 테스트")
     ap.add_argument("--cells", type=Path, help="중간 형태(JSON) 패널로 만들기")
+    ap.add_argument("--fixture", type=Path, help="API 학교: 저장해 둔 응답(JSON)으로 테스트")
     args = ap.parse_args(argv)
     try:
-        stats = run(args.school, args.out, args.html, args.cells)
+        stats = run(args.school, args.out, args.html, args.cells, args.fixture)
     except ScrapeError as e:
         print(f"[실패] {args.school}: {e}", file=sys.stderr)
         return 1

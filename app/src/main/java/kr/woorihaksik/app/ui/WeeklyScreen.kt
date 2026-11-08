@@ -36,7 +36,7 @@ import java.util.Locale
 fun WeeklyScreen(s: UiState, vm: AppViewModel) {
     val school = s.school ?: return
     Column(Modifier.fillMaxSize().background(W.Bg).statusBarsPadding()) {
-        ScreenHeader(caption = listOfNotNull(school.shortName, s.campus?.name).joinToString(" "), title = "이번 주 메뉴")
+        ScreenHeader(caption = listOfNotNull(school.shortName, s.campusLabel).joinToString(" "), title = "이번 주 메뉴")
         WeeklyBody(s, vm)
     }
 }
@@ -58,12 +58,17 @@ private fun WeeklyBody(s: UiState, vm: AppViewModel) {
         return
     }
 
-    Segmented(
-        items = rests.map { it.id to it.name },
-        selectedId = restaurant.id,
-        onSelect = vm::selectWeeklyRestaurant,
-        modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
-    )
+    if (rests.size > 1) {
+        Segmented(
+            items = rests.map { it.id to it.name },
+            selectedId = restaurant.id,
+            onSelect = vm::selectWeeklyRestaurant,
+            modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp),
+        )
+    } else {
+        // 식당이 하나뿐이면 고르는 버튼 대신 이름만.
+        Text(restaurant.name, style = T.BodyStrong, color = W.Muted, modifier = Modifier.padding(start = 20.dp, end = 20.dp, top = 12.dp))
+    }
 
     // 주 이동: 데이터가 있는 범위 안에서만.
     val start = s.weekStart
