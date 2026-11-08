@@ -81,7 +81,7 @@ fun openStatus(h: Hours?, date: LocalDate, now: LocalDateTime = nowKst()): OpenS
     for (b in h.breaks) {
         val from = parseTime(b.from) ?: continue
         val to = parseTime(b.to) ?: continue
-        if (!t.isBefore(from) && t.isBefore(to)) return OpenStatus("휴게 중 · ${pretty(b.to)}까지", false)
+        if (!t.isBefore(from) && t.isBefore(to)) return OpenStatus("쉬는 시간 · ${pretty(b.to)}에 다시 열어요", false)
     }
-    return OpenStatus("지금 운영 중", true)
+    return OpenStatus("운영 중 · ${pretty(h.close)}까지", true)
 }
