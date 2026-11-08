@@ -1,6 +1,14 @@
 package kr.woorihaksik.app.ui
 
+import androidx.compose.animation.AnimatedVisibility
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.animateContentSize
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.expandVertically
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.fadeOut
+import androidx.compose.animation.shrinkVertically
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -65,8 +73,7 @@ fun WCard(
             .fillMaxWidth()
             .clip(RoundedCornerShape(20.dp))
             .background(W.Card)
-            .padding(padding)
-            .animateContentSize(),
+            .padding(padding),
         verticalArrangement = Arrangement.spacedBy(spacing.dp),
         content = content,
     )
@@ -197,7 +204,8 @@ fun MenuGroups(groups: List<ShapedGroup>, limit: Int?, onMore: (() -> Unit)?) {
     val visible = limitGroups(groups, limit)
     val total = groups.sumOf { it.items.size }
     val shown = visible.sumOf { it.items.size }
-    Column(verticalArrangement = Arrangement.spacedBy(16.dp)) {
+    // '더 보기'를 누르면 카드가 부드럽게 늘어난다.
+    Column(Modifier.animateContentSize(tween(Motion.ENTER)), verticalArrangement = Arrangement.spacedBy(16.dp)) {
         visible.forEach { g ->
             Column(verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 g.label?.let { Text(it, style = T.CaptionStrong, color = W.Muted2) }
@@ -273,14 +281,19 @@ fun DailyMenuSection(items: List<MenuItem>, divider: Boolean) {
                     maxLines = 1,
                 )
             }
+            val turn by animateFloatAsState(if (open) 180f else 0f, tween(Motion.ENTER), label = "chevron")
             Icon(
                 painterResource(R.drawable.ic_chevron_down),
                 null,
-                Modifier.size(20.dp).rotate(if (open) 180f else 0f),
+                Modifier.size(20.dp).rotate(turn),
                 tint = W.Muted2,
             )
         }
-        if (open) {
+        AnimatedVisibility(
+            visible = open,
+            enter = expandVertically(tween(Motion.ENTER)) + fadeIn(tween(Motion.ENTER)),
+            exit = shrinkVertically(tween(Motion.EXIT)) + fadeOut(tween(Motion.EXIT)),
+        ) {
             Column(Modifier.padding(top = 4.dp, bottom = 8.dp), verticalArrangement = Arrangement.spacedBy(10.dp)) {
                 var lastVenue: String? = null
                 items.forEach { item ->
@@ -310,12 +323,13 @@ fun Segmented(items: List<Pair<String, String>>, selectedId: String?, onSelect: 
     ) {
         items.forEach { (id, label) ->
             val on = id == selectedId
+            val bg by animateColorAsState(if (on) W.Card else W.Line, tween(Motion.ENTER), label = "segBg")
             Box(
                 Modifier
                     .weight(1f)
                     .height(40.dp)
                     .clip(RoundedCornerShape(10.dp))
-                    .background(if (on) W.Card else Color.Transparent)
+                    .background(bg)
                     .semantics { selected = on }
                     .clickable(role = Role.Tab) { onSelect(id) },
                 contentAlignment = Alignment.Center,

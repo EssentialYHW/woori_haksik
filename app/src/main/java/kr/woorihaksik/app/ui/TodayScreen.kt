@@ -1,5 +1,8 @@
 package kr.woorihaksik.app.ui
 
+import androidx.compose.animation.AnimatedContent
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -78,7 +81,13 @@ fun TodayScreen(s: UiState, vm: AppViewModel) {
                     Text("다시 시도", style = T.Label, color = W.Ink)
                 }
             }
-            else -> DayList(s, vm, data, campus.id)
+            else -> AnimatedContent(
+                targetState = s.selectedDate to campus.id,
+                transitionSpec = { Motion.pagerOrFade(targetState.first.compareTo(initialState.first).coerceIn(-1, 1)) },
+                label = "day",
+            ) { (date, cid) ->
+                DayList(s, vm, data, cid, date)
+            }
         }
     }
 
@@ -96,13 +105,14 @@ private fun DayChips(s: UiState, vm: AppViewModel) {
     ) {
         weekDays(weekStart(s.selectedDate)).forEach { d ->
             val on = d == s.selectedDate
-            val fg = if (on) onColorFor(accent) else W.Ink
+            val bg by animateColorAsState(if (on) accent else W.Bg, tween(Motion.ENTER), label = "chipBg")
+            val fg by animateColorAsState(if (on) onColorFor(accent) else W.Ink, tween(Motion.ENTER), label = "chipFg")
             Column(
                 Modifier
                     .weight(1f)
                     .height(52.dp)
                     .clip(RoundedCornerShape(14.dp))
-                    .background(if (on) accent else W.Bg)
+                    .background(bg)
                     .semantics { selected = on }
                     .clickable(role = Role.Tab) { vm.selectDate(d) },
                 horizontalAlignment = Alignment.CenterHorizontally,
@@ -116,9 +126,9 @@ private fun DayChips(s: UiState, vm: AppViewModel) {
 }
 
 @Composable
-private fun DayList(s: UiState, vm: AppViewModel, data: MenuData, campusId: String) {
-    val campus = s.campus ?: return
-    val date = s.selectedDate
+private fun DayList(s: UiState, vm: AppViewModel, data: MenuData, campusId: String, date: java.time.LocalDate) {
+    // 전환 중에는 나가는 화면이 예전 캠퍼스·날짜를 그대로 그려야 하므로 인자로 받은 값을 쓴다.
+    val campus = data.campuses.firstOrNull { it.id == campusId } ?: return
     // 식단이 한 번이라도 있는 식당만, 즐겨찾기 먼저.
     val rests = campus.restaurants
         .filter { it.hasMenu }
@@ -178,7 +188,7 @@ private fun RestaurantCard(r: Restaurant, e: Entry, s: UiState, vm: AppViewModel
     val daily = remember(data, e.date, campusId, r.id) { dailyKeys(data, e.date, campusId, r.id) }
     val shaped = remember(e, daily) { shape(e, daily) }
     var expanded by rememberSaveable(e.date.toString(), r.id) { mutableStateOf(false) }
-    val status = openStatus(r.hours, s.selectedDate)
+    val status = openStatus(r.hours, e.date)
     val fav = favKey(campusId, r.id) in s.favorites
 
     WCard(padding = PaddingValues(start = 20.dp, end = 8.dp, top = 12.dp, bottom = 12.dp)) {

@@ -1,5 +1,6 @@
 package kr.woorihaksik.app.ui
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -86,13 +87,34 @@ private fun WeeklyBody(s: UiState, vm: AppViewModel) {
         }
     }
 
-    val daily = remember(data, start, campus.id, restaurant.id) { dailyKeys(data, start, campus.id, restaurant.id) }
+    // 지난주/다음 주는 옆으로 밀리며, 식당을 바꾸면 흐려졌다 나타나며 바뀐다.
+    AnimatedContent(
+        targetState = WeekKey(start, campus.id, restaurant.id),
+        transitionSpec = {
+            val dir = if (targetState.restaurantId != initialState.restaurantId || targetState.campusId != initialState.campusId) 0
+            else targetState.start.compareTo(initialState.start).coerceIn(-1, 1)
+            Motion.pagerOrFade(dir)
+        },
+        label = "week",
+    ) { k ->
+        WeekList(data, k)
+    }
+}
+
+private data class WeekKey(val start: java.time.LocalDate, val campusId: String, val restaurantId: String)
+
+@Composable
+private fun WeekList(data: kr.woorihaksik.app.data.MenuData, k: WeekKey) {
+    val start = k.start
+    val campusId = k.campusId
+    val restaurantId = k.restaurantId
+    val daily = remember(data, k) { dailyKeys(data, start, campusId, restaurantId) }
     val days = weekDays(start)
-    val dailyItems = remember(data, daily, restaurant.id) {
-        days.firstNotNullOfOrNull { d -> data.entry(d, campus.id, restaurant.id) }?.let { shape(it, daily).daily }.orEmpty()
+    val dailyItems = remember(data, daily, k) {
+        days.firstNotNullOfOrNull { d -> data.entry(d, campusId, restaurantId) }?.let { shape(it, daily).daily }.orEmpty()
     }
     val t = today()
-    val last = data.lastMenuDate(campus.id)
+    val last = data.lastMenuDate(campusId)
 
     LazyColumn(
         Modifier.fillMaxSize(),
@@ -107,7 +129,7 @@ private fun WeeklyBody(s: UiState, vm: AppViewModel) {
             }
         }
         items(days, key = { it.toString() }) { d ->
-            val e = data.entry(d, campus.id, restaurant.id)
+            val e = data.entry(d, campusId, restaurantId)
             WCard(padding = PaddingValues(horizontal = 20.dp, vertical = 18.dp), spacing = 12) {
                 Row(verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                     Text(d.dayOfWeek.getDisplayName(TextStyle.FULL, Locale.KOREAN), style = T.Title, color = W.Ink)
