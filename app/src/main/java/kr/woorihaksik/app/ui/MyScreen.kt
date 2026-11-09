@@ -62,6 +62,9 @@ fun MyScreen(s: UiState, vm: AppViewModel) {
     val accent = LocalSchoolColor.current
     val uri = LocalUriHandler.current
     var campusDialog by remember { mutableStateOf(false) }
+    // 화면 본문과 아래 캠퍼스 선택 팝업이 같이 쓰도록 맨 위에서 꺼내 둔다.
+    val data = s.data
+    val campus = s.campus
 
     Column(
         Modifier
@@ -98,8 +101,6 @@ fun MyScreen(s: UiState, vm: AppViewModel) {
         }
 
         SectionTitle("학식")
-        val data = s.data
-        val campus = s.campus
         if (data != null && campus != null) {
             if (data.campuses.size > 1) {
                 SettingRow("기본 캠퍼스", value = campus.name) { campusDialog = true }
