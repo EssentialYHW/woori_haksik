@@ -1,0 +1,15 @@
+{
+ "version": 1,
+ "schools": [
+  {
+   "id": "donga",
+   "name": "동아대학교",
+   "shortName": "동아대",
+   "region": "부산",
+   "campusSummary": "승학 · 구덕 · 부민캠퍼스",
+   "color": "#041E42",
+   "colorName": "동아진청색",
+   "dataPath": "donga/latest.json"
+  }
+ ]
+}

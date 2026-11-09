@@ -1,0 +1,52 @@
+name: 앱 빌드
+
+on:
+  push:
+    branches: [main]
+    paths: ["app/**", "gradle/**", "*.gradle.kts", "gradle.properties", ".github/workflows/android.yml"]
+  workflow_dispatch: {}
+
+permissions:
+  contents: write
+
+concurrency:
+  group: android
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: "17"
+
+      - uses: gradle/actions/setup-gradle@v4
+
+      - name: 데이터 주소를 이 저장소로 맞추기
+        run: echo "woori.dataBaseUrl=https://raw.githubusercontent.com/${GITHUB_REPOSITORY}/main/data/" >> gradle.properties
+
+      - name: APK 빌드
+        run: |
+          chmod +x gradlew
+          ./gradlew --no-daemon :app:assembleDebug
+
+      - uses: actions/upload-artifact@v4
+        with:
+          name: woori-haksik-debug
+          path: app/build/outputs/apk/debug/app-debug.apk
+
+      - name: '"프로토타입" 릴리스에 APK 올리기 (친구들이 받기 쉬운 링크)'
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: prototype
+          name: 우리학식 프로토타입
+          prerelease: true
+          files: app/build/outputs/apk/debug/app-debug.apk
+          body: |
+            최신 테스트용 APK예요. 휴대폰에서 app-debug.apk 를 받아 설치하세요.
+            (처음 설치할 때 '출처를 알 수 없는 앱' 허용이 필요해요.)
