@@ -2,11 +2,11 @@
  "school": "cup",
  "ok": true,
  "message": "ok",
- "lastAttempt": "2026-11-11T17:24:22+09:00",
- "lastSuccess": "2026-11-11T17:24:22+09:00",
+ "lastAttempt": "2026-11-12T11:56:12+09:00",
+ "lastSuccess": "2026-11-12T11:56:12+09:00",
  "stats": {
-  "entries": 28,
-  "days_with_menu": 28,
+  "entries": 27,
+  "days_with_menu": 27,
   "history_days": 30
  }
 }
