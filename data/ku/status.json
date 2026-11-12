@@ -2,11 +2,11 @@
  "school": "ku",
  "ok": true,
  "message": "ok",
- "lastAttempt": "2026-11-12T11:57:07+09:00",
- "lastSuccess": "2026-11-12T11:57:07+09:00",
+ "lastAttempt": "2026-11-12T17:51:54+09:00",
+ "lastSuccess": "2026-11-12T17:51:54+09:00",
  "stats": {
-  "entries": 20,
-  "days_with_menu": 5,
-  "history_days": 5
+  "entries": 30,
+  "days_with_menu": 10,
+  "history_days": 10
  }
 }
