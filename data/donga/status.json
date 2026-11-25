@@ -2,11 +2,11 @@
  "school": "donga",
  "ok": true,
  "message": "ok",
- "lastAttempt": "2026-11-24T20:38:12+09:00",
- "lastSuccess": "2026-11-24T20:38:12+09:00",
+ "lastAttempt": "2026-11-25T13:52:55+09:00",
+ "lastSuccess": "2026-11-25T13:52:55+09:00",
  "stats": {
-  "entries": 149,
-  "days_with_menu": 24,
+  "entries": 143,
+  "days_with_menu": 23,
   "history_days": 35
  }
 }
